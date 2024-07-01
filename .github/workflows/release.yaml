@@ -21,11 +21,16 @@ jobs:
           token: ${{ secrets.TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+      
+      - name: echoing
+        run: |
+          echo " release create --> ${{ steps.release.outputs.releases_created }} "
+          echo "release number -->  ${{ fromJSON(steps.release.outputs.pr).number }} "
 
       - name: Checkout repository
         if: ${{ !steps.release.outputs.releases_created }}
         uses: actions/checkout@v3
-        
+
       - name: "Merge pull request"
         if: ${{ !steps.release.outputs.releases_created }}
         env:
