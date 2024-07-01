@@ -27,11 +27,11 @@ jobs:
           echo " release create --> ${{ steps.release.outputs.releases_created }} "
 
       - name: Checkout repository
-        if: ${{ steps.release.outputs.releases_created == "false" }} 
+        if: ${{ steps.release.outputs.releases_created == 'false' }} 
         uses: actions/checkout@v3
 
       - name: "Merge pull request"
-        if: ${{ steps.release.outputs.releases_created == "false" }}
+        if: ${{ steps.release.outputs.releases_created == 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: gh pr merge -s ${{ fromJSON(steps.release.outputs.pr).number }} --admin
